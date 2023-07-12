@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors")
 
 const workoutRoutes = require("./routes/workouts");
 
@@ -8,6 +9,7 @@ const workoutRoutes = require("./routes/workouts");
 const app = express();
 
 //middleware: something that runs between request and response. get and post are also middleware
+app.use(cors())
 app.use(express.json()); //to access req object ex: req.body
 app.use((req, res, next) => {
   console.log(req.path, req.method);
