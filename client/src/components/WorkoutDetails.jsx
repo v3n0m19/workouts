@@ -1,12 +1,19 @@
+import { useAuthContext } from '../hooks/useAuthContext'
 import {useWorkoutsContext} from '../hooks/useWorkoutsContext'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
 const WorkoutDetails = ({workout})=>{
     const { dispatch} = useWorkoutsContext()
+    const {user} = useAuthContext()
     const handleClick = async () =>{
-        
-        const response = await fetch('https://workouts-gamma.vercel.app/api/workouts/'+workout._id,{
-            method:'DELETE'
+        if(!user){
+            return
+        }
+        const response = await fetch('hhttps://workouts-gamma.vercel.app/api/workouts/'+workout._id,{
+            method:'DELETE',
+            headers:{
+                'Authorization':`Bearer ${user.token}`
+            }
         })
         const json = await response.json()
         if(response.ok){
